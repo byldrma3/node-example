@@ -10,6 +10,14 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image_full_url: {
+      type: String,
+      required: false,
+    },
+    image: {
+      type: String,
+      required: false,
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",

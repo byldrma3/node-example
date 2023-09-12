@@ -23,6 +23,11 @@ function App() {
     refetch()
   }
 
+  const handleDeletePost = async (id: string) => {
+    await deletePost(id)
+    refetch()
+  }
+
   if (error) return <div>Hata!!!</div>
 
   if (isLoading) return <div>Loading...</div>
@@ -38,16 +43,20 @@ function App() {
         <br />
         <button type="submit">Submit</button>
       </form>
-      {data?.posts.map((item) => (
-        <div key={item._id}>
-          <h1>{item.title}</h1>
-          <p>{item.content}</p>
-          <p>{item.category.name}</p>
-          <button type="button" onClick={() => deletePost(item._id)}>
-            Sil
-          </button>
-        </div>
-      ))}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 40, marginTop: 60 }}>
+        {data?.posts.map((item) => (
+          <div key={item._id}>
+            <img src={item.image_full_url} alt={item.title} width={250} height={250} style={{ objectFit: 'cover' }} />
+            <h1>{item.title}</h1>
+            <p>{item.content}</p>
+            <p>{item.category.name}</p>
+            <p>{item.user.name.toUpperCase()}</p>
+            <button type="button" onClick={() => handleDeletePost(item._id)}>
+              Sil
+            </button>
+          </div>
+        ))}
+      </div>
       <br />
       <br />
       {data?.currentPage !== 1 && (

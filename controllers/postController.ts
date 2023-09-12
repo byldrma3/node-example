@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import fs from "fs";
 import Post from "../models/Post";
 
 export const listPosts = async (req: Request, res: Response) => {
@@ -25,12 +26,14 @@ export const listPosts = async (req: Request, res: Response) => {
 
 // Yeni Post Oluşturma
 export const createPost = async (req: Request, res: Response) => {
+  const baseUrl = req.protocol + "://" + req.get("host");
+  const filePath = `${baseUrl}/${req.file.path}`;
+
   try {
-    const post = new Post({ ...req.body, user: req.user?._id });
+    const post = new Post({ ...req.body, image_full_url: filePath, image: req.file.path, user: req.user._id });
     await post.save();
     res.status(201).json(post);
   } catch (error) {
-    console.log("req.user:", req.user);
     res.status(500).json({ error: "Post oluşturulamadı." });
   }
 };
@@ -66,6 +69,17 @@ export const updatePost = async (req: Request, res: Response) => {
 // Post Silme
 export const deletePost = async (req: Request, res: Response) => {
   try {
+    const postToDelete = await Post.findById(req.params.id);
+
+    if (postToDelete && postToDelete.image) {
+      fs.unlink(postToDelete.image, (err) => {
+        if (err) {
+          console.error("Fotoğraf silinirken hata oluştu:", err);
+        } else {
+          console.log("Fotoğraf başarıyla silindi");
+        }
+      });
+    }
     const post = await Post.findByIdAndDelete(req.params.id);
     if (!post) {
       return res.status(404).json({ error: "Post bulunamadı." });

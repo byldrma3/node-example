@@ -23,6 +23,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
   res.status(500).send("Bir şeyler yanlış gitti!");
 });
 app.use(cors());
+app.use("/uploads", express.static("uploads"));
 
 // Rotalar
 app.use("/posts", postRoutes);
