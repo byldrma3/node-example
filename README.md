@@ -47,6 +47,7 @@
    ```
     MONGO_URI=your_mongo_uri
     PORT=your_preferred_port
+    JWT_SECRET=your_jwt_code
    ```
 
 ## 🎮 Running the Project / Projeyi Çalıştırma
