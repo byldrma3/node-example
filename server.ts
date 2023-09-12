@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Veritabanı bağlantısı (bu adımı şimdilik boş bırakacağız ve birazdan dolduracağız)
+// Veritabanı bağlantısı
 connectDB();
 
 // Middleware
@@ -24,7 +24,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 });
 app.use(cors());
 
-// Rotalar (bu adımı şimdilik boş bırakacağız ve birazdan dolduracağız)
+// Rotalar
 app.use("/posts", postRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);
