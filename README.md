@@ -27,18 +27,21 @@
 ### Installation / Kurulum
 
 1. 🇺🇸 Clone the GitHub repository.
+
    🇹🇷 GitHub reposunu klonlayın.
 
    ```bash
-   git clone [repo-link]
+   git clone https://github.com/byldrma3/node-example.git
    ```
 
 2. 🇺🇸 Install the dependencies.
+
    🇹🇷 Bağımlılıkları yükleyin.
 
    `npm install`
 
 3. 🇺🇸 Create a .env file and set the following variables.
+
    🇹🇷 .env dosyası oluşturun ve aşağıdaki değişkenleri ayarlayın.
 
    ```
