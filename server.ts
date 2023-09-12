@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/database";
 import postRoutes from "./routes/postRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
+import userRoutes from "./routes/userRotes";
 
 // Konfigürasyon dosyasını yükle
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(cors());
 // Rotalar (bu adımı şimdilik boş bırakacağız ve birazdan dolduracağız)
 app.use("/posts", postRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/users", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Sunucu http://localhost:${PORT} portunda başlatıldı.`);

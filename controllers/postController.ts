@@ -7,7 +7,12 @@ export const listPosts = async (req: Request, res: Response) => {
   const skip = (page - 1) * limit; // Atlanacak post sayısı
   try {
     const totalPosts = await Post.countDocuments();
-    const posts = await Post.find().populate("category").sort({ createdAt: -1 }).skip(skip).limit(limit);
+    const posts = await Post.find()
+      .populate("category")
+      .populate("user", "name email")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     res.json({
       totalPages: Math.ceil(totalPosts / limit), // Toplam sayfa sayısı
       currentPage: page,
@@ -21,10 +26,11 @@ export const listPosts = async (req: Request, res: Response) => {
 // Yeni Post Oluşturma
 export const createPost = async (req: Request, res: Response) => {
   try {
-    const post = new Post(req.body);
+    const post = new Post({ ...req.body, user: req.user?._id });
     await post.save();
     res.status(201).json(post);
   } catch (error) {
+    console.log("req.user:", req.user);
     res.status(500).json({ error: "Post oluşturulamadı." });
   }
 };

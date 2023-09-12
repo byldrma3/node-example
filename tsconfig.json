@@ -8,7 +8,27 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "baseUrl": "./",
+    "paths": {
+      "@controllers/*": ["controllers/*"],
+      "@models/*": ["models/*"],
+      "@routes/*": ["routes/*"],
+      "@config/*": ["config/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"],
+      "@middlewares/*": ["middlewares/*"]
+    }
   },
-  "include": ["*.ts", "controllers/*.ts", "models/*.ts", "routes/*.ts", "config/*.ts"]
+  "include": [
+    "*.ts",
+    "controllers/*.ts",
+    "models/*.ts",
+    "routes/*.ts",
+    "config/*.ts",
+    "types/**/*.ts",
+    "utils/*.ts",
+    "middlewares/*.ts"
+  ]
 }

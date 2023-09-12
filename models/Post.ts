@@ -15,6 +15,11 @@ const postSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
   {
     timestamps: true, // Otomatik olarak oluşturma ve güncelleme tarihlerini ekler
