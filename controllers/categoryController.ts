@@ -3,7 +3,7 @@ import Category from "../models/Category";
 
 export const listCategories = async (req: Request, res: Response) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate("user", "name email");
     res.json(categories);
   } catch (error) {
     res.status(500).json({ error: "Kategoriler listelenemedi." });
@@ -12,7 +12,7 @@ export const listCategories = async (req: Request, res: Response) => {
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const category = new Category(req.body);
+    const category = new Category({ ...req.body, user: req.user._id });
     await category.save();
     res.status(201).json(category);
   } catch (error) {

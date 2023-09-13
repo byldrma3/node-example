@@ -49,7 +49,7 @@ function App() {
             <img src={item.image_full_url} alt={item.title} width={250} height={250} style={{ objectFit: 'cover' }} />
             <h1>{item.title}</h1>
             <p>{item.content}</p>
-            <p>{item.category.name}</p>
+            <p>{item?.category?.name ?? 'Kategori Yok'}</p>
             <p>{item.user.name.toUpperCase()}</p>
             <button type="button" onClick={() => handleDeletePost(item._id)}>
               Sil

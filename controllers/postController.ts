@@ -55,8 +55,30 @@ export const showPost = async (req: Request, res: Response) => {
 
 // Post Güncelleme
 export const updatePost = async (req: Request, res: Response) => {
+  const baseUrl = req.protocol + "://" + req.get("host");
   try {
-    const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    let updateData = { ...req.body };
+    // Eğer yeni bir fotoğraf yüklenmişse
+    if (req?.file) {
+      const filePath = `${baseUrl}/${req.file.path}`;
+      updateData.image = req.file.path;
+      updateData.image_full_url = filePath;
+      const oldPost = await Post.findById(req.params.id);
+      if (oldPost && oldPost.image) {
+        const oldFilePath = oldPost.image;
+        if (oldFilePath) {
+          fs.unlink(oldFilePath, (err) => {
+            if (err) {
+              console.error("Fotoğraf silinirken hata oluştu:", err);
+            } else {
+              console.log("Fotoğraf başarıyla silindi");
+            }
+          });
+        }
+      }
+    }
+
+    const post = await Post.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (!post) {
       return res.status(404).json({ error: "Post bulunamadı." });
     }
